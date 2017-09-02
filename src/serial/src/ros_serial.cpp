@@ -2,6 +2,7 @@
 #include <ros/spinner.h>
 #include <nodelet/loader.h>
 #include <string>
+#include <cstring>
 #include "ros_serial/ros_serial_node.h"
 
 using namespace std;
