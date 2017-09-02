@@ -29,7 +29,7 @@ class serial_handler
 	char buffer_[buffer_size_];
 	
 	string port_name_ = "/dev/ttyACM0";
-	int baudrate_ = B57600;
+	int baudrate_;// = B57600;
 
 	double tx_time_per_byte_ = 0;
 	
