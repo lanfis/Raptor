@@ -203,6 +203,6 @@ include_directories(
 # catkin_add_noseserials(serial)
 
 
-add_executable(serial src/serial.cpp)
+add_executable(serial src/ros_serial.cpp)
 target_link_libraries(serial ${catkin_LIBRARIES} ${OpenCV_INCLUDE_DIRS})
 add_dependencies(serial serial)
