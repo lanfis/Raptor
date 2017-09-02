@@ -105,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-	../../include
+	#../../include
 #  INCLUDE_DIRS include
 #  LIBRARIES serial
 #  CATKIN_DEPENDS nodelet roscpp rospy rostime sensor_msgs std_msgs
@@ -121,7 +121,7 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
-  ../include
+  ../../../include
 )
 
 ## Declare a C++ library
@@ -204,5 +204,5 @@ include_directories(
 
 
 add_executable(serial src/ros_serial.cpp)
-target_link_libraries(serial ${catkin_LIBRARIES} ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(serial ${catkin_LIBRARIES})
 add_dependencies(serial serial)
