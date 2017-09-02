@@ -56,14 +56,14 @@ class ROS_Serial
     void connectCb_data(const ros::SingleSubscriberPublisher& ssp)
     {
       if(data_pub_.getNumSubscribers() > 1) return;
-      OUT_INFO("%s connected !", topic_data_pub.c_str());
+      ROS_INFO("%s connected !", topic_data_pub.c_str());
       sub_init();
 	  sub_topic_get();
     }
     void disconnectCb_data(const ros::SingleSubscriberPublisher& ssp)
     {
       if(data_pub_.getNumSubscribers() > 0) return;
-      OUT_WARN("%s disconnected !", topic_data_pub.c_str());
+      ROS_WARN("%s disconnected !", topic_data_pub.c_str());
       sub_shutdown();
     }
     
@@ -136,14 +136,14 @@ void ROS_Serial::manual_callBack(const std_msgs::Bool::ConstPtr& msg)
 {
 	if(msg -> data & !flag_manual_set)
 	{
-		OUT_INFO("%s manual setting activating !", nodeName.c_str());
+		ROS_INFO("%s manual setting activating !", nodeName.c_str());
 		sub_manual_init();
 		sub_manual_topic_get();
 		flag_manual_set = msg -> data;
 	}
 	if(!msg -> data & flag_manual_set)
 	{
-		OUT_INFO("%s manual setting deactivating !", nodeName.c_str());
+		ROS_INFO("%s manual setting deactivating !", nodeName.c_str());
 		sub_manual_shutdown();
 		flag_manual_set = msg -> data;
 	}
@@ -151,24 +151,24 @@ void ROS_Serial::manual_callBack(const std_msgs::Bool::ConstPtr& msg)
 
 void ROS_Serial::port_name_callBack(const std_msgs::String::ConstPtr& msg)
 {
-    OUT_INFO("%s port name : %s !", nodeName.c_str(), msg -> data);
+    ROS_INFO("%s port name : %s !", nodeName.c_str(), msg -> data);
 	serial.save_status();
     serial.set_port(msg -> data);
 	if(!serial.open())
 	{
-		OUT_WARN("%s port : %s open fail !", nodeName.c_str(), msg -> data);
+		ROS_WARN("%s port : %s open fail !", nodeName.c_str(), msg -> data);
 		serial.load_status();
 	}
 }
 
 void ROS_Serial::baudrate_callBack(const std_msgs::Int32::ConstPtr& msg)
 {
-    OUT_INFO("%s baudrate : %d !", nodeName.c_str(), msg -> data);
+    ROS_INFO("%s baudrate : %d !", nodeName.c_str(), msg -> data);
 	serial.save_status();
     serial.set_baudrate(msg -> data);
 	if(!serial.open())
 	{
-		OUT_WARN("%s baudrate : %d open fail !", nodeName.c_str(), msg -> data);
+		ROS_WARN("%s baudrate : %d open fail !", nodeName.c_str(), msg -> data);
 		serial.load_status();
 	}
 }
@@ -180,13 +180,13 @@ void ROS_Serial::pub_topic_get()
 
 void ROS_Serial::pub_init()
 {
-    OUT_INFO("Publisher %s initiating !", topic_data_pub.c_str());
+    ROS_INFO("Publisher %s initiating !", topic_data_pub.c_str());
     data_pub_ = n_.advertise(topic_data_pub, queue_size, connect_cb_data, disconnect_cb_data);
 }
 
 void ROS_Serial::pub_shutdown()
 {
-    OUT_WARN("Publisher %s shuting down !", topic_data_pub.c_str());
+    ROS_WARN("Publisher %s shuting down !", topic_data_pub.c_str());
     data_pub_.shutdown();
 }
 
@@ -198,17 +198,17 @@ void ROS_Serial::sub_topic_get()
 
 void ROS_Serial::sub_init()
 {
-    OUT_INFO("Subscriber %s initiating !", topic_data_sub.c_str());
+    ROS_INFO("Subscriber %s initiating !", topic_data_sub.c_str());
     data_sub_ = n_.subscribe(topic_data_sub.c_str(), queue_size, &ROS_Serial::data_callBack, this);
-    OUT_INFO("Subscriber %s initiating !", topic_manual_set_sub.c_str());
+    ROS_INFO("Subscriber %s initiating !", topic_manual_set_sub.c_str());
     manual_set_sub_ = n_.subscribe(topic_manual_set_sub.c_str(), queue_size, &ROS_Serial::manual_set_callBack, this);
 }
 
 void ROS_Serial::sub_shutdown()
 {
-    OUT_WARN("Subscriber %s shuting down !", topic_data_sub.c_str());
+    ROS_WARN("Subscriber %s shuting down !", topic_data_sub.c_str());
     data_sub_.shutdown();
-    OUT_WARN("Subscriber %s shuting down !", topic_manual_set_sub.c_str());
+    ROS_WARN("Subscriber %s shuting down !", topic_manual_set_sub.c_str());
     manual_set_sub_.shutdown();
 }
 
@@ -220,17 +220,17 @@ void ROS_Serial::sub_manual_topic_get()
 
 void ROS_Serial::sub_manual_init()
 {
-    OUT_INFO("Subscriber %s initiating !", topic_port_name_sub.c_str());
+    ROS_INFO("Subscriber %s initiating !", topic_port_name_sub.c_str());
     port_name_sub_ = n_.subscribe(topic_port_name_sub.c_str(), queue_size, &ROS_Serial::port_name_callBack, this);
-    OUT_INFO("Subscriber %s initiating !", topic_baudrate_sub.c_str());
+    ROS_INFO("Subscriber %s initiating !", topic_baudrate_sub.c_str());
     baudrate_sub_ = n_.subscribe(topic_baudrate_sub.c_str(), queue_size, &ROS_Serial::baudrate_callBack, this);
 }
 
 void ROS_Serial::sub_manual_shutdown()
 {
-    OUT_WARN("Subscriber %s shuting down !", topic_port_name_sub.c_str());
+    ROS_WARN("Subscriber %s shuting down !", topic_port_name_sub.c_str());
     port_name_sub_.shutdown();
-    OUT_WARN("Subscriber %s shuting down !", topic_baudrate_sub.c_str());
+    ROS_WARN("Subscriber %s shuting down !", topic_baudrate_sub.c_str());
     baudrate_sub_.shutdown();
 }
 #endif
