@@ -16,7 +16,6 @@
 
 using namespace std;
 using namespace ros;
-using namespace cv;
 
 class ROS_Serial
 {    

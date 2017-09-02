@@ -7,6 +7,7 @@
 #include <cstring>
 #include <string>
 
+using namespace ros;
 
 class serial_handler
 {
@@ -107,7 +108,7 @@ bool serial_handler::setup_port()
   	tcflush(fd_, TCIFLUSH);
 	tcsetattr(fd_, TCSANOW, &newio_);
 
-	tx_time_per_byte = (1000.0 / (double)baudrate_) * 10.0;
+	tx_time_per_byte_ = (1000.0 / (double)baudrate_) * 10.0;
 	return true;
 }
 
