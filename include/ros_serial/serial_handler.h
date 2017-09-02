@@ -6,6 +6,14 @@
 #include <stdio.h>
 #include <cstring>
 #include <string>
+#include <stdio.h>
+#include <fcntl.h>
+#include <string.h>
+#include <unistd.h>
+#include <termios.h>
+#include <time.h>
+#include <sys/time.h>
+#include <sys/ioctl.h>
 
 using namespace ros;
 
@@ -44,7 +52,7 @@ class serial_handler
     to the actual number of characters actually read 
 */
 	int write(string& packet){ return write(fd_, packet.c_str(), packet.length()); };
-	bool open(){ close(); fd_ = open(port_name_.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK); if(fd_ < 0) {is_open_ = false; return false;} is_open_ = true; return true; };
+	bool open(){ close(); fd_ = open(this -> port_name_.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK); if(fd_ < 0) {is_open_ = false; return false;} is_open_ = true; return true; };
 	bool open(string port_name, int baudrate){ set_port(port_name); set_baudrate(baudrate); return open(); };
 	bool close(){ if(!is_open_) return false; close(fd_); is_open_ = false; return true;};
 	void save_status(){ tcgetattr(fd_, &oldio_); };
