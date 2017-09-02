@@ -24,9 +24,10 @@ class serial_handler
 	double tx_time_per_byte_ = 0;
 	
   private:
-//    void reset(){ bzero(&newio_, sizeof(newtio)); /* clear struct for new port settings */};
+//    void reset(){ bzero(&newio_, sizeof(newio_)); /* clear struct for new port settings */};
 	bool setup_port();
 	int get_cflag_baudrate(int baudrate);
+	double get_time();
 
   public:
 	bool is_open(){ return is_open_; };
@@ -45,8 +46,8 @@ class serial_handler
 	bool open(){ close(); fd_ = open(port_name_.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK); if(fd_ < 0) {is_open_ = false; return false;} is_open_ = true; return true; };
 	bool open(string port_name, int baudrate){ set_port(port_name); set_baudrate(baudrate); return open(); };
 	bool close(){ if(!is_open_) return false; close(fd_); is_open_ = false; return true;};
-	void save_status(){ tcgetattr(fd, &oldio_); };
-	void load_status(){ tcsetattr(fd, &newio_); };
+	void save_status(){ tcgetattr(fd_, &oldio_); };
+	void load_status(){ tcsetattr(fd_, &newio_); };
 	
 	serial_handler();
 	~serial_handler();
@@ -70,41 +71,41 @@ bool serial_handler::setup_port()
 	int clag_baud = get_cflag_baudrate(baudrate_);
 	if(clag_baud == -1)
 		return false;
-	bzero(&newtio_, sizeof(newtio_)); // clear struct for new port settings
-	newtio_.c_cflag = cflag_baud | CS8 | CLOCAL | CREAD | CRTSCTS;//8 data bits //	Local line - do not change "owner" of port //	Enable receiver
-	newtio_.c_iflag = IGNPAR | ICRNL;//Ignore parity errors //Map CR to NL
-	newtio_.c_oflag      = 0;
+	bzero(&newio_, sizeof(newio_)); // clear struct for new port settings
+	newio_.c_cflag = cflag_baud | CS8 | CLOCAL | CREAD | CRTSCTS;//8 data bits //	Local line - do not change "owner" of port //	Enable receiver
+	newio_.c_iflag = IGNPAR | ICRNL;//Ignore parity errors //Map CR to NL
+	newio_.c_oflag      = 0;
 /*
   ICANON  : enable canonical input
   disable all echo functionality, and don't send signals to calling program
 */
-	newtio_.c_lflag      = ICANON;
+	newio_.c_lflag      = ICANON;
 /* 
   initialize all control characters 
   default values can be found in /usr/include/termios.h, and are given
   in the comments, but we don't need them here
 */
-	newtio.c_cc[VINTR]    = 0;     /* Ctrl-c */ 
-	newtio.c_cc[VQUIT]    = 0;     /* Ctrl-\ */
-	newtio.c_cc[VERASE]   = 0;     /* del */
-	newtio.c_cc[VKILL]    = 0;     /* @ */
-	newtio.c_cc[VEOF]     = 4;     /* Ctrl-d */
-	newtio.c_cc[VTIME]    = 0;     /* inter-character timer unused */
-	newtio.c_cc[VMIN]     = 1;     /* blocking read until 1 character arrives */
-	newtio.c_cc[VSWTC]    = 0;     /* '\0' */
-	newtio.c_cc[VSTART]   = 0;     /* Ctrl-q */ 
-	newtio.c_cc[VSTOP]    = 0;     /* Ctrl-s */
-	newtio.c_cc[VSUSP]    = 0;     /* Ctrl-z */
-	newtio.c_cc[VEOL]     = 0;     /* '\0' */
-	newtio.c_cc[VREPRINT] = 0;     /* Ctrl-r */
-	newtio.c_cc[VDISCARD] = 0;     /* Ctrl-u */
-	newtio.c_cc[VWERASE]  = 0;     /* Ctrl-w */
-	newtio.c_cc[VLNEXT]   = 0;     /* Ctrl-v */
-	newtio.c_cc[VEOL2]    = 0;     /* '\0' */
+	newio_.c_cc[VINTR]    = 0;     /* Ctrl-c */ 
+	newio_.c_cc[VQUIT]    = 0;     /* Ctrl-\ */
+	newio_.c_cc[VERASE]   = 0;     /* del */
+	newio_.c_cc[VKILL]    = 0;     /* @ */
+	newio_.c_cc[VEOF]     = 4;     /* Ctrl-d */
+	newio_.c_cc[VTIME]    = 0;     /* inter-character timer unused */
+	newio_.c_cc[VMIN]     = 1;     /* blocking read until 1 character arrives */
+	newio_.c_cc[VSWTC]    = 0;     /* '\0' */
+	newio_.c_cc[VSTART]   = 0;     /* Ctrl-q */ 
+	newio_.c_cc[VSTOP]    = 0;     /* Ctrl-s */
+	newio_.c_cc[VSUSP]    = 0;     /* Ctrl-z */
+	newio_.c_cc[VEOL]     = 0;     /* '\0' */
+	newio_.c_cc[VREPRINT] = 0;     /* Ctrl-r */
+	newio_.c_cc[VDISCARD] = 0;     /* Ctrl-u */
+	newio_.c_cc[VWERASE]  = 0;     /* Ctrl-w */
+	newio_.c_cc[VLNEXT]   = 0;     /* Ctrl-v */
+	newio_.c_cc[VEOL2]    = 0;     /* '\0' */
 
 	// clean the buffer and activate the settings for the port
   	tcflush(fd_, TCIFLUSH);
-	tcsetattr(fd_, TCSANOW, &newtio_);
+	tcsetattr(fd_, TCSANOW, &newio_);
 
 	tx_time_per_byte = (1000.0 / (double)baudrate_) * 10.0;
 	return true;
