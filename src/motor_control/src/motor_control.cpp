@@ -3,25 +3,26 @@
 #include <nodelet/loader.h>
 #include <string>
 #include <cstring>
-#include "ros_serial/ros_serial_node.h"
+
+#include "motion/motor_control_node.h"
 
 using namespace std;
 
 
 int main(int argc, char** argv)
 {
-  string nodeName = "ros_serial";
+  string nodeName = "motor_control";
   ROS_INFO("Initializing %s ...", nodeName.c_str());
   ros::init(argc, argv, nodeName.c_str());
   ros::NodeHandle n;
 
   ROS_INFO("%s activating ok !", nodeName.c_str());
-  ROS_Serial_Node ros_serial_node(n, 0);
+  Motor_Control_Node motor_control_node(n, 0);
   
   
   while (ros::ok()) 
   {
-    ros_serial_node.run();
+    motor_control_node.run();
   }
   //ros::spin();
   

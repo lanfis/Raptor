@@ -16,6 +16,7 @@
 #include <sys/time.h>
 #include <sys/ioctl.h>
 
+using namespace std;
 using namespace ros;
 
 class serial_handler
@@ -25,11 +26,11 @@ class serial_handler
 	struct termios newio_;
 	int fd_;
 	bool is_open_ = false;
-	const int buffer_size_ = 255;
+	static const int buffer_size_ = 255;
 	char buffer_[buffer_size_];
 	
 	string port_name_ = "/dev/ttyACM0";
-	int baudrate_;// = B57600;
+	int baudrate_ = 57600;
 
 	double tx_time_per_byte_ = 0;
 	
@@ -45,19 +46,19 @@ class serial_handler
 	string get_port(){return port_name_;};
 	void set_baudrate(int baudrate){baudrate_ = baudrate;};
 	int get_baudrate(){return baudrate_;};
-	int read(string& packet){ int res = read(fd_, buffer_, buffer_size_); packet.assign(buffer_); return res; };
+	int read_port(string& packet){ if(!is_open()) return -1; int res = read(fd_, buffer_, buffer_size_); if(res < 0) return res; packet.clear(); packet.assign(buffer_, res); return res; };
  /* read blocks program execution until a line terminating character is 
     input, even if more than 255 chars are input. If the number
     of characters read is smaller than the number of chars available,
     subsequent reads will return the remaining chars. res(return) will be set
     to the actual number of characters actually read 
 */
-	int write(string& packet){ return write(fd_, packet.c_str(), packet.length()); };
-	bool open(){ close(); fd_ = open(this -> port_name_.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK); if(fd_ < 0) {is_open_ = false; return false;} is_open_ = true; return true; };
-	bool open(string port_name, int baudrate){ set_port(port_name); set_baudrate(baudrate); return open(); };
-	bool close(){ if(!is_open_) return false; close(fd_); is_open_ = false; return true;};
+	int write_port(string& packet){ if(!is_open()) return -1; return write(fd_, packet.c_str(), packet.length()); };
+	bool open_port(){ close_port(); fd_ = open(port_name_.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK); if(fd_ < 0) {is_open_ = false; return false;} is_open_ = true; setup_port(); return true; };
+	bool open_port(string port_name, int baudrate){ set_port(port_name); set_baudrate(baudrate); return open_port(); };
+	bool close_port(){ if(!is_open_) return false; close(fd_); is_open_ = false; return true;};
 	void save_status(){ tcgetattr(fd_, &oldio_); };
-	void load_status(){ tcsetattr(fd_, &newio_); };
+	void load_status(){ tcsetattr(fd_, TCSAFLUSH, &newio_); };
 	
 	serial_handler();
 	~serial_handler();
@@ -66,7 +67,7 @@ class serial_handler
 serial_handler::serial_handler()
 {}
 
-~serial_handler::serial_handler()
+serial_handler::~serial_handler()
 {}
 
 double serial_handler::get_time()
@@ -78,8 +79,8 @@ double serial_handler::get_time()
 
 bool serial_handler::setup_port()
 {
-	int clag_baud = get_cflag_baudrate(baudrate_);
-	if(clag_baud == -1)
+	int cflag_baud = get_cflag_baudrate(baudrate_);
+	if(cflag_baud == -1)
 		return false;
 	bzero(&newio_, sizeof(newio_)); // clear struct for new port settings
 	newio_.c_cflag = cflag_baud | CS8 | CLOCAL | CREAD | CRTSCTS;//8 data bits //	Local line - do not change "owner" of port //	Enable receiver

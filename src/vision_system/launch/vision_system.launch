@@ -1,0 +1,5 @@
+<launch>
+  <node name="vision_system" pkg="vision_system" type="vision_system" respawn="false" output="screen">
+      <remap from="/Camera/image/compressed" to="/compressed_image"/>
+  </node>
+</launch>
