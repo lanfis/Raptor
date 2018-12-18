@@ -63,7 +63,9 @@ Camera_Driver::Camera_Driver()
 }
 
 Camera_Driver::~Camera_Driver()
-{}
+{
+  cap_.release();
+}
 
 bool Camera_Driver::camera_read()
 {
@@ -98,6 +100,7 @@ bool Camera_Driver::run()
     if(!flag_camera_read)
       return false;
     cap_ >> this -> image;
+    //image.convertTo(image, -1, 0.1, -50.0);
     // Check if grabbed frame is actually full with some content
     if(image.empty()) 
 	  return false;

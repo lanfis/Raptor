@@ -37,7 +37,7 @@ class Camera_Focus// : public nodelet::Nodelet
     string topic_image_roi_resolution_sub = "Camera_Focus/image_roi_resolution";
     
   private:
-    string ver_ = "1.1";
+    string ver_ = "1.2";
     int queue_size = 4;
 	#ifdef _ROS_LINK_H_
 	ROS_Link *ros_link;
@@ -69,14 +69,16 @@ class Camera_Focus// : public nodelet::Nodelet
     void connectCb_image_roi(const image_transport::SingleSubscriberPublisher& ssp)
     {
       if(it_roi_pub_.getNumSubscribers() > 1) return;
-      ROS_INFO("%s connected !", topic_image_roi_pub.c_str());
+      string status = topic_image_roi_pub + " connected !";
+      OUT_INFO(nodeName, status);
       sub_init();
 	  sub_topic_get();
     }
     void disconnectCb_image_roi(const image_transport::SingleSubscriberPublisher&)
     {
       if(it_roi_pub_.getNumSubscribers() > 0) return;
-      ROS_WARN("%s disconnected !", topic_image_roi_pub.c_str());
+      string status = topic_image_roi_pub + " disconnected !";
+      OUT_WARN(nodeName, status);
       sub_shutdown();
     }
     
@@ -183,7 +185,12 @@ void Camera_Focus::image_callBack(const sensor_msgs::ImageConstPtr& msg)
     }
     catch (cv_bridge::Exception& e)
     {
-      ROS_ERROR("cv_bridge exception: %s", e.what());
+      stringstream token;
+      string tmp;
+      token << e.what();
+      token >> tmp;
+      string status = "cv_bridge exception: " + tmp;
+      OUT_ERROR(nodeName, status);
       return;
     }
     //sensor_msgs::Image::Ptr cv_ptr = cv_bridge::CvImage(msg->header, msg->encoding, out_image).toImageMsg();
@@ -193,25 +200,45 @@ void Camera_Focus::image_callBack(const sensor_msgs::ImageConstPtr& msg)
 
 void Camera_Focus::roi_ratio_callBack(const std_msgs::Float32::ConstPtr& msg)
 {
-    ROS_INFO("ROI ratio is changed to %f !", msg -> data);
+    stringstream token;
+    string tmp;
+    token << msg -> data;
+    token >> tmp;
+    string status = "ROI ratio is changed to " + tmp + " !";
+    OUT_INFO(nodeName, status);
     image_roi_ratio = (msg -> data > 1.0)? 1.0 : msg -> data;
 }
 
 void Camera_Focus::roi_width_offset_callBack(const std_msgs::Int32::ConstPtr& msg)
 {
-    ROS_INFO("ROI width offset is changed to %d !", msg -> data);
+    stringstream token;
+    string tmp;
+    token << msg -> data;
+    token >> tmp;
+    string status = "ROI width offset is changed to " + tmp + " !";
+    OUT_INFO(nodeName, status);
     image_roi_width_offset = msg -> data;
 }
 
 void Camera_Focus::roi_height_offset_callBack(const std_msgs::Int32::ConstPtr& msg)
 {
-    ROS_INFO("ROI height offset is changed to %d !", msg -> data);
+    stringstream token;
+    string tmp;
+    token << msg -> data;
+    token >> tmp;
+    string status = "ROI height offset is changed to " + tmp + " !";
+    OUT_INFO(nodeName, status);
     image_roi_height_offset = msg -> data;
 }
 
 void Camera_Focus::roi_resolution_callBack(const std_msgs::Float32::ConstPtr& msg)
 {
-    ROS_INFO("Resolution ratio is changed to %f !", msg -> data);
+    stringstream token;
+    string tmp;
+    token << msg -> data;
+    token >> tmp;
+    string status = "Resolution ratio is changed to " + tmp + " !";
+    OUT_INFO(nodeName, status);
     image_roi_resolution = (msg -> data > 1.0)? 1.0 : msg -> data;
     image_roi_resolution = (image_roi_resolution < 0.0)? 0.0 : image_roi_resolution;
 }
@@ -223,13 +250,15 @@ void Camera_Focus::pub_topic_get()
 
 void Camera_Focus::pub_init()
 {
-    ROS_INFO("Publisher %s initiating !", topic_image_sub.c_str());
+    string status = "Publisher " + topic_image_sub + " initiating !";
+    OUT_INFO(nodeName, status);
     it_roi_pub_ = it_roi_ -> advertise(topic_image_roi_pub, queue_size, connect_cb_image_roi, disconnect_cb_image_roi);
 }
 
 void Camera_Focus::pub_shutdown()
 {
-    ROS_WARN("Publisher %s shuting down !", topic_image_roi_pub.c_str());
+    string status = "Publisher " + topic_image_roi_pub + " shuting down !";
+    OUT_WARN(nodeName, status);
     it_roi_pub_.shutdown();
 }
 
@@ -244,29 +273,39 @@ void Camera_Focus::sub_topic_get()
 
 void Camera_Focus::sub_init()
 {
-    ROS_INFO("Subscriber %s initiating !", topic_image_sub.c_str());
+    string status = "Subscriber " + topic_image_sub + " initiating !";
+    OUT_INFO(nodeName, status);
     it_sub_ = it_ -> subscribe(topic_image_sub.c_str(), queue_size, &Camera_Focus::image_callBack, this);
-    ROS_INFO("Subscriber %s initiating !", topic_image_roi_ratio_sub.c_str());
+    status = "Subscriber " + topic_image_roi_ratio_sub + " initiating !";
+    OUT_INFO(nodeName, status);
     roi_ratio_sub_ = n_.subscribe(topic_image_roi_ratio_sub.c_str(), queue_size, &Camera_Focus::roi_ratio_callBack, this);
-    ROS_INFO("Subscriber %s initiating !", topic_image_roi_width_offset_sub.c_str());
+    status = "Subscriber " + topic_image_roi_width_offset_sub + " initiating !";
+    OUT_INFO(nodeName, status);
     roi_width_offset_sub_ = n_.subscribe(topic_image_roi_width_offset_sub.c_str(), queue_size, &Camera_Focus::roi_width_offset_callBack, this);
-    ROS_INFO("Subscriber %s initiating !", topic_image_roi_height_offset_sub.c_str());
+    status = "Subscriber " + topic_image_roi_height_offset_sub + " initiating !";
+    OUT_INFO(nodeName, status);
     roi_height_offset_sub_ = n_.subscribe(topic_image_roi_height_offset_sub.c_str(), queue_size, &Camera_Focus::roi_height_offset_callBack, this);
-    ROS_INFO("Subscriber %s initiating !", topic_image_roi_resolution_sub.c_str());
+    status = "Subscriber " + topic_image_roi_resolution_sub + " initiating !";
+    OUT_INFO(nodeName, status);
     roi_resolution_sub_ = n_.subscribe(topic_image_roi_resolution_sub.c_str(), queue_size, &Camera_Focus::roi_resolution_callBack, this);
 }
 
 void Camera_Focus::sub_shutdown()
 {
-    ROS_WARN("Subscriber %s shuting down !", topic_image_sub.c_str());
+    string status = "Subscriber " + topic_image_sub + " shuting down !";
+    OUT_WARN(nodeName, status);
     it_sub_.shutdown();
-    ROS_WARN("Subscriber %s shuting down !", topic_image_roi_ratio_sub.c_str());
+    status = "Subscriber " + topic_image_roi_ratio_sub + " shuting down !";
+    OUT_WARN(nodeName, status);
     roi_ratio_sub_.shutdown();
-    ROS_WARN("Subscriber %s shuting down !", topic_image_roi_width_offset_sub.c_str());
+    status = "Subscriber " + topic_image_roi_width_offset_sub + " shuting down !";
+    OUT_WARN(nodeName, status);
     roi_width_offset_sub_.shutdown();
-    ROS_WARN("Subscriber %s shuting down !", topic_image_roi_height_offset_sub.c_str());
+    status = "Subscriber " + topic_image_roi_height_offset_sub + " shuting down !";
+    OUT_WARN(nodeName, status);
     roi_height_offset_sub_.shutdown();
-    ROS_WARN("Subscriber %s shuting down !", topic_image_roi_resolution_sub.c_str());
+    status = "Subscriber " + topic_image_roi_resolution_sub + " shuting down !";
+    OUT_WARN(nodeName, status);
     roi_resolution_sub_.shutdown();
 }
 #endif

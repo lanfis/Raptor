@@ -11,9 +11,14 @@ class Motor
     int position = 0;
     int speed = 0;
     int load = 0;
+    int voltage = 0;
+    int temperature = 0;
+    bool torque = 0;
+  /*
     char voltage = 0x00;
     char temperature = 0x00;
     char torque = 0x00;
+  */
 
   public:
     int position_max = 0;

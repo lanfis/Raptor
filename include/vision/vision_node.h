@@ -17,6 +17,7 @@
 #include <std_msgs/String.h>
 
 #include "Camera/Camera.h"
+//#include "IRCamera/IRCamera.h"
 
 using namespace std;
 using namespace cv;
@@ -25,10 +26,13 @@ using namespace cv;
 class Vision_System
 {
     private:
-      string ver_ = "1.1";
+      string ver_ = "1.2";//add ir camera
       ros::AsyncSpinner spinner;
       ros::NodeHandle n_;
 	  Camera *camera;
+	  #ifdef _IRCAMERA_H_
+	  IRCamera *ir_camera;
+	  #endif
 	  
     public:
       Vision_System(ros::NodeHandle& n, int thread);
@@ -41,17 +45,27 @@ Vision_System::Vision_System(ros::NodeHandle& n, int thread) : n_(n), spinner(th
     spinner.start();
 	camera = new Camera(n_);
 	camera -> init();
+	#ifdef _IRCAMERA_H_
+	ir_camera = new IRCamera(n_);
+	ir_camera -> init();
+	#endif
     run();
 }
 
 Vision_System::~Vision_System()
 {
 	delete camera;
+	#ifdef _IRCAMERA_H_
+	delete ir_camera;
+	#endif
 }
 
 void Vision_System::run()
 {
 	camera -> run();
+	#ifdef _IRCAMERA_H_
+	ir_camera -> run();
+	#endif
 }
 
 

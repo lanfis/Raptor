@@ -126,6 +126,7 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
   ../../include
+  ../../include/vision
   ${OpenCV_INCLUDE_DIRS}
 )
 
@@ -194,6 +195,10 @@ include_directories(
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
+install(FILES
+  nodelet_plugins.xml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 #############
 ## Testing ##
 #############
@@ -206,9 +211,16 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-#add_library(camera_focus SHARED ../../../ROS/ros_package/VISION_SYSTEM/camera_focus.cpp)
-#target_link_libraries(camera_focus ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_library(camera_focus SHARED ../../include/vision/CAMERA_FOCUS/camera_focus.cpp)
+target_link_libraries(camera_focus ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
 
 add_executable(vision_system src/vision_system.cpp)
 target_link_libraries(vision_system ${catkin_LIBRARIES} ${OpenCV_LIBS})
 add_dependencies(vision_system vision_system)
+
+#find_library(IR_LIBRARIES NAMES irimager irimageprocessing ircore udev
+#                          PATHS /usr/include/)
+#if(IR_LIBRARIES)
+#  target_add_library(vision_system IR_LIBRARIES)
+#endif(IR_LIBRARIES)

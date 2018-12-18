@@ -1,0 +1,5 @@
+<launch>
+  <node name="vision_system" pkg="vision_system" type="vision_system" respawn="false" output="screen">
+      <remap from="/Camera/image" to="/Image_Transformer/image"/>
+  </node>
+</launch>

@@ -1,4 +1,4 @@
-#define DELAY_TIME  20
+#define DELAY_TIME  1
 #define PIN_BATTERY 0
 #define RED_LED_485EXP     18
 #define GREEN_LED_485EXP   19
@@ -9,7 +9,7 @@
 #define DXL_BUS_SERIAL1 1  //Dynamixel on Serial1(USART1)  <-OpenCM9.04
 #define DXL_BUS_SERIAL2 2  //Dynamixel on Serial2(USART2)  <-LN101,BT210
 #define DXL_BUS_SERIAL3 3  //Dynamixel on Serial3(USART3)  <-OpenCM 485EXP
-#define MOTOR_SIZE 32
+#define MOTOR_SIZE 16
 #define CHAR_SIZE  32
 //#define FREQ_STATUS_SCAN 1
 #define TOLERENCE_POSITION 5
@@ -74,44 +74,44 @@
 #define p_punchh 49//(0X31) Punch(H) Highest byte of Punch RW 0 (0X00) 
 
 Dynamixel Dxl(DXL_BUS_SERIAL3);
-int get_model(byte& id)                             {delay(DELAY_TIME);return Dxl.readWord(id, p_model1);};
-byte get_id(byte& id)                               {return Dxl.readByte(id, p_id);};
-void set_id(byte& id, byte data)                    {Dxl.writeByte(id, p_id, data);};
-byte get_baudrate(byte& id)                         {return Dxl.readByte(id, p_rate);};
-void set_baudrate(byte& id, byte data)              {Dxl.writeByte(id, p_rate, data);};
-byte get_return_delay_time(byte& id)                {return Dxl.readByte(id, p_rdt);};
-void set_return_delay_time(byte& id, byte data)     {Dxl.writeByte(id, p_rdt, data);};
-int get_cw_angle_limit(byte& id)                    {return Dxl.readWord(id, p_cwall);};
-void set_cw_angle_limit(byte& id, int data)         {Dxl.writeWord(id, p_cwall, data);};
-int get_ccw_angle_limit(byte& id)                   {return Dxl.readWord(id, p_ccwall);};
-void set_ccw_angle_limit(byte& id, int data)        {Dxl.writeWord(id, p_ccwall, data);};
-byte get_temperature_limit(byte& id)                {return Dxl.readByte(id, p_hlt);};
-void set_temperature_limit(byte& id, byte data)     {Dxl.writeByte(id, p_hlt, data);};//Be aware of using this function ! Motor will stop for 20 minutes while temperature exceeding the limit.
-byte get_voltage_min(byte& id)                      {return Dxl.readByte(id, p_llv);};
-void set_voltage_min(byte& id, byte data)           {Dxl.writeByte(id, p_llv, data);};
-byte get_voltage_max(byte& id)                      {return Dxl.readByte(id, p_hlv);};
-void set_voltage_max(byte& id, byte data)           {Dxl.writeByte(id, p_hlv, data);};
-int get_torque_limit(byte& id)                      {return Dxl.readWord(id, p_mtl);};
-void set_torque_limit(byte& id, int data)           {Dxl.writeWord(id, p_mtl, data);};
-byte get_status(byte& id)                           {return Dxl.readByte(id, p_srl);};
-byte get_alarm_LED(byte& id)                        {return Dxl.readByte(id, p_al);};
-void set_alarm_LED(byte& id, byte data)             {Dxl.writeByte(id, p_al, data);};
+int get_model(byte& id)                             {delay(DELAY_TIME); return Dxl.readWord(id, p_model1);};
+byte get_id(byte& id)                               {delay(DELAY_TIME); return Dxl.readByte(id, p_id);};
+void set_id(byte& id, byte data)                    {delay(DELAY_TIME); Dxl.writeByte(id, p_id, data);};
+byte get_baudrate(byte& id)                         {delay(DELAY_TIME); return Dxl.readByte(id, p_rate);};
+void set_baudrate(byte& id, byte data)              {delay(DELAY_TIME); Dxl.writeByte(id, p_rate, data);};
+byte get_return_delay_time(byte& id)                {delay(DELAY_TIME); return Dxl.readByte(id, p_rdt);};
+void set_return_delay_time(byte& id, byte data)     {delay(DELAY_TIME); Dxl.writeByte(id, p_rdt, data);};
+int get_cw_angle_limit(byte& id)                    {delay(DELAY_TIME); return Dxl.readWord(id, p_cwall);};
+void set_cw_angle_limit(byte& id, int data)         {delay(DELAY_TIME); Dxl.writeWord(id, p_cwall, data);};
+int get_ccw_angle_limit(byte& id)                   {delay(DELAY_TIME); return Dxl.readWord(id, p_ccwall);};
+void set_ccw_angle_limit(byte& id, int data)        {delay(DELAY_TIME); Dxl.writeWord(id, p_ccwall, data);};
+byte get_temperature_limit(byte& id)                {delay(DELAY_TIME); return Dxl.readByte(id, p_hlt);};
+void set_temperature_limit(byte& id, byte data)     {delay(DELAY_TIME); Dxl.writeByte(id, p_hlt, data);};//Be aware of using this function ! Motor will stop for 20 minutes while temperature exceeding the limit.
+byte get_voltage_min(byte& id)                      {delay(DELAY_TIME); return Dxl.readByte(id, p_llv);};
+void set_voltage_min(byte& id, byte data)           {delay(DELAY_TIME); Dxl.writeByte(id, p_llv, data);};
+byte get_voltage_max(byte& id)                      {delay(DELAY_TIME); return Dxl.readByte(id, p_hlv);};
+void set_voltage_max(byte& id, byte data)           {delay(DELAY_TIME); Dxl.writeByte(id, p_hlv, data);};
+int get_torque_limit(byte& id)                      {delay(DELAY_TIME); return Dxl.readWord(id, p_mtl);};
+void set_torque_limit(byte& id, int data)           {delay(DELAY_TIME); Dxl.writeWord(id, p_mtl, data);};
+byte get_status(byte& id)                           {delay(DELAY_TIME); return Dxl.readByte(id, p_srl);};
+byte get_alarm_LED(byte& id)                        {delay(DELAY_TIME); return Dxl.readByte(id, p_al);};
+void set_alarm_LED(byte& id, byte data)             {delay(DELAY_TIME); Dxl.writeByte(id, p_al, data);};
 
-int get_position(byte& id)                          {return Dxl.readWord(id, p_preposl)%1024;};
-int get_speed(byte& id)                             {return Dxl.readWord(id, p_prespeedl)%1024;};
-int get_load(byte& id)                              {return Dxl.readWord(id, p_preloadl)%1024;};
-byte get_voltage(byte& id)                          {return Dxl.readByte(id, p_prev);};
-byte get_temperature(byte& id)                      {return Dxl.readByte(id, p_pret);};
+int get_position(byte& id)                          {delay(DELAY_TIME); return Dxl.readWord(id, p_preposl)%1024;};
+int get_speed(byte& id)                             {delay(DELAY_TIME); return Dxl.readWord(id, p_prespeedl)%1024;};
+int get_load(byte& id)                              {delay(DELAY_TIME); return Dxl.readWord(id, p_preloadl)%1024;};
+byte get_voltage(byte& id)                          {delay(DELAY_TIME); return Dxl.readByte(id, p_prev);};
+byte get_temperature(byte& id)                      {delay(DELAY_TIME); return Dxl.readByte(id, p_pret);};
 
-void set_position(byte& id, int data)               {Dxl.writeWord(id, p_posl, data);};
-void set_speed(byte& id, int data)                  {Dxl.writeWord(id, p_speedl, data);};
-void set_load_limit(byte& id, int data)             {Dxl.writeWord(id, p_tll, data);};
-int get_load_limit(byte& id)			    {return Dxl.readWord(id, p_tll);};
-void set_torque_enable(byte& id, byte data)         {Dxl.writeByte(id, p_te, data);};
-byte get_torque_enable(byte& id)                    {return Dxl.readByte(id, p_te);};
-void set_LED_enable(byte& id, byte data)            {Dxl.writeByte(id, p_led, data);};
-byte get_LED_enable(byte& id)                       {return Dxl.readByte(id, p_led);};
-byte is_moving(byte& id)                            {return Dxl.readByte(id, p_m);};
+void set_position(byte& id, int data)               {delay(DELAY_TIME); Dxl.writeWord(id, p_posl, data);};
+void set_speed(byte& id, int data)                  {delay(DELAY_TIME); Dxl.writeWord(id, p_speedl, data);};
+void set_load_limit(byte& id, int data)             {delay(DELAY_TIME); Dxl.writeWord(id, p_tll, data);};
+int get_load_limit(byte& id)                        {delay(DELAY_TIME); return Dxl.readWord(id, p_tll);};
+void set_torque_enable(byte& id, byte data)         {delay(DELAY_TIME); Dxl.writeByte(id, p_te, data);};
+byte get_torque_enable(byte& id)                    {delay(DELAY_TIME); return Dxl.readByte(id, p_te);};
+void set_LED_enable(byte& id, byte data)            {delay(DELAY_TIME); Dxl.writeByte(id, p_led, data);};
+byte get_LED_enable(byte& id)                       {delay(DELAY_TIME); return Dxl.readByte(id, p_led);};
+byte is_moving(byte& id)                            {delay(DELAY_TIME); return Dxl.readByte(id, p_m);};
 
 class Motor
 {
@@ -153,6 +153,7 @@ byte motor_size = 0;
 
 void Motor_Init();
 void Motor_Ping();
+void Motor_Ping(byte& id);
 void Motor_Scan();
 void Motor_Status_Scan(byte& id);
 void Motor_Scan(byte& id);
@@ -188,9 +189,11 @@ void USB_Publisher(char* buffer, byte nCount);
 #define MOTOR_INST_ACTION           'A'
 #define MOTOR_INST_RESET            'E'
 #define MOTOR_INST_SYNC_WRITE       'S'
+#define MOTOR_INST_ACK              'K'
 #define MOTOR_INST_INFO             '-'
 #define MOTOR_INST_WARN             '~'
 #define MOTOR_INST_FATAL            '!'
+#define MOTOR_END_CHAR				'\n'
 
 #define MOTOR_FUNC_POSITION         'P'
 #define MOTOR_FUNC_SPEED            'S'
@@ -203,6 +206,7 @@ void USB_Publisher(char* buffer, byte nCount);
 void pub_info_set(){COM_INST = MOTOR_INST_INFO;};
 void pub_warn_set(){COM_INST = MOTOR_INST_WARN;};
 void pub_fatal_set(){COM_INST = MOTOR_INST_FATAL;};
+void pub_ack_set(){COM_INST = MOTOR_INST_ACK;};
 void pub_position_set(byte& id)
 {
   if(!motor[id].flag_motor) return;
@@ -271,7 +275,7 @@ bool read_position(byte* buffer, byte& buffer_size)
 bool write_position(byte* buffer, byte& buffer_size)
 {
   if(buffer[1] != MOTOR_FUNC_POSITION) return false;
-  if(buffer[2] >= motor_size) return false;
+  if(buffer[2] >= MOTOR_SIZE) return false;
   Motor_Position_Set(buffer[2], int(buffer[3])*256 + int(buffer[4]));
   return true;
 }
@@ -287,7 +291,7 @@ bool read_speed(byte* buffer, byte& buffer_size)
 bool write_speed(byte* buffer, byte& buffer_size)
 {
   if(buffer[1] != MOTOR_FUNC_SPEED) return false;
-  if(buffer[2] >= motor_size) return false;
+  if(buffer[2] >= MOTOR_SIZE) return false;
   Motor_Speed_Set(buffer[2], int(buffer[3])*256 + int(buffer[4]));
   return true;
 }
@@ -303,7 +307,7 @@ bool read_load(byte* buffer, byte& buffer_size)
 bool write_load_limit(byte* buffer, byte& buffer_size)
 {
   if(buffer[1] != MOTOR_FUNC_LOAD) return false;
-  if(buffer[2] >= motor_size) return false;
+  if(buffer[2] >= MOTOR_SIZE) return false;
   Motor_Load_Limit_Set(buffer[2], int(buffer[3])*256 + int(buffer[4]));
   return true;
 }
@@ -337,7 +341,7 @@ bool read_torque(byte* buffer, byte& buffer_size)
 bool write_torque_enable(byte* buffer, byte& buffer_size)
 {
   if(buffer[1] != MOTOR_FUNC_TORQUE) return false;
-  if(buffer[2] >= motor_size) return false;
+  if(buffer[2] >= MOTOR_SIZE) return false;
   if(int(buffer[3])*256 + int(buffer[4]) > 0)
     Motor_Torque_Enable_Set(buffer[2], 0x01);
   else
@@ -368,6 +372,18 @@ void write(byte* buffer, byte& buffer_size)
   if(write_load_limit(buffer, buffer_size)) return;
   if(write_torque_enable(buffer, buffer_size))  return;
 }
+void ack(byte* buffer, byte& buffer_size)
+{
+  if(buffer_size < 5) return;
+  com[0] = buffer[0];
+  com[1] = buffer[1];
+  com[2] = buffer[2];
+  com[3] = buffer[3];
+  com[4] = buffer[4];
+  com_size = 5;
+  pub_ack_set();
+  USB_Publisher(com, com_size);
+}
 //void reg_write(byte* buffer, byte& buffer_size);
 
 ////////General
@@ -382,53 +398,65 @@ bool flag_scan = true;
 void LED_Cycle_Blink_Breath() {if((65535-blink_value) < blink_diff) {blink_value = 65535; blink_diff *= -1;} else if((0-blink_value) > blink_diff) {blink_value = 0; blink_diff *= -1;} else blink_value += blink_diff; analogWrite(BOARD_LED_PIN, blink_value);};
 float Battery_Read() {return float(analogRead(PIN_BATTERY))/10.0/910.0*11.1;}; // Reading values from our battery} //910 is the result of (4095/(R2(R2+R1)))/10
 //void delay_func(){LED_Cycle_Blink_Breath(); delay(DELAY_TIME);};
-void Safety_Load_Limit_Lock(byte& id){if(motor[id].load_limit <= 0) return; motor[id].load_limit = (motor[id].load_limit - 1 > 0)? motor[id].load_limit - 1 : 0; set_load_limit(id, motor[id].load_limit);};
-void Safety_Load_Limit_Release(byte& id){if(motor[id].load_limit >= 1023) return; motor[id].load_limit = (motor[id].load_limit + 1 < 1024)? motor[id].load_limit + 1 : 1023; set_load_limit(id, motor[id].load_limit);};
-void Safety_Load_Limit(byte& id){if(motor[id].flag_safety_lock > 0) Safety_Load_Limit_Lock(id);};
+void Safety_Load_Limit_Lock(byte& id){if(motor[id].load_limit <= 0) return; motor[id].load_limit = (motor[id].load_limit - 100 > 0)? motor[id].load_limit - 100 : 0; set_load_limit(id, motor[id].load_limit);};
+void Safety_Load_Limit_Release(byte& id){if(motor[id].load_limit >= 1023) return; motor[id].load_limit = (motor[id].load_limit + 100 < 1024)? motor[id].load_limit + 100 : 1023; set_load_limit(id, motor[id].load_limit);};
+void Safety_Load_Limit(byte& id){if(motor[id].flag_safety_lock & LOCK_LOAD) Safety_Load_Limit_Lock(id); else Safety_Load_Limit_Release(id);};
 void Safety_Load_Limit(){for(byte i = 0; i < motor_size; i++){Safety_Load_Limit(motor_list_id[i]);}};
 
 ////////
 ////////Motor Definition & Setting
-#define MOTOR_LEFT_THIGH_ID             1
-#define MOTOR_LEFT_THIGH_ANGLE_MIN      273//512-1024/300*90    273
-#define MOTOR_LEFT_THIGH_ANGLE_MAX      870//512+1024/300*90    870
-#define MOTOR_LEFT_THIGH_LOAD_LIMIT   1023
-#define MOTOR_LEFT_CALF_ID              2
-#define MOTOR_LEFT_CALF_ANGLE_MIN       307//512-1024/300*0     307
-#define MOTOR_LEFT_CALF_ANGLE_MAX       1023//wait for test     1023
-#define MOTOR_LEFT_CALF_LOAD_LIMIT    1023
-#define MOTOR_LEFT_ANKLE_ID             3
-#define MOTOR_LEFT_ANKLE_ANGLE_MIN      376//512-1024/300*90    376
-#define MOTOR_LEFT_ANKLE_ANGLE_MAX      821//wait for test      821
-#define MOTOR_LEFT_ANKLE_LOAD_LIMIT   1023
-#define MOTOR_RIGHT_THIGH_ID            4
-#define MOTOR_RIGHT_THIGH_ANGLE_MIN     154//512-1024/300*90    154
-#define MOTOR_RIGHT_THIGH_ANGLE_MAX     751//512+1024/300*90    751
-#define MOTOR_RIGHT_THIGH_LOAD_LIMIT  1023
-#define MOTOR_RIGHT_CALF_ID             5
-#define MOTOR_RIGHT_CALF_ANGLE_MIN      0//wait for test        0
-#define MOTOR_RIGHT_CALF_ANGLE_MAX      717//                   717
-#define MOTOR_RIGHT_CALF_LOAD_LIMIT   1023
-#define MOTOR_RIGHT_ANKLE_ID            6
-#define MOTOR_RIGHT_ANKLE_ANGLE_MIN     203//wait for test      203
-#define MOTOR_RIGHT_ANKLE_ANGLE_MAX     648//512+1024/300*90    648
-#define MOTOR_RIGHT_ANKLE_LOAD_LIMIT  1023
-#define MOTOR_MOUTH_ID                  7
-#define MOTOR_MOUTH_ANGLE_MIN           427//512-1024/300*90    427
-#define MOTOR_MOUTH_ANGLE_MAX           819//512+1024/300*90    819
+#define MOTOR_MOUTH_ID                  1
+#define MOTOR_MOUTH_ANGLE_MIN           427//512-1024/300*25    427
+#define MOTOR_MOUTH_ANGLE_MAX           768//512+1024/300*75    768
 #define MOTOR_MOUTH_LOAD_LIMIT        1023
-#define MOTOR_HEAD_ID                   8
-#define MOTOR_HEAD_ANGLE_MIN            205//512-1024/300*90
-#define MOTOR_HEAD_ANGLE_MAX            819//512+1024/300*90
-#define MOTOR_HEAD_LOAD_LIMIT         1023
-#define MOTOR_NECK_VERTICAL_ID          9
-#define MOTOR_NECK_VERTICAL_ANGLE_MIN   427//512-1024/300*90    427
-#define MOTOR_NECK_VERTICAL_ANGLE_MAX   736//512+1024/300*90    736
-#define MOTOR_NECK_VERTICAL_LOAD_LIMIT    1023
-#define MOTOR_NECK_HORIZON_ID           10
-#define MOTOR_NECK_HORIZON_ANGLE_MIN    393//512-1024/300*90    393
-#define MOTOR_NECK_HORIZON_ANGLE_MAX    633//512+1024/300*90    633
+#define MOTOR_NECK_VERTICAL_ID          2
+#define MOTOR_NECK_VERTICAL_ANGLE_MIN   410//512-1024/300*30    410
+#define MOTOR_NECK_VERTICAL_ANGLE_MAX   819//512+1024/300*90    819
+#define MOTOR_NECK_VERTICAL_LOAD_LIMIT 1023
+#define MOTOR_NECK_HORIZON_ID           3
+#define MOTOR_NECK_HORIZON_ANGLE_MIN    290//512-1024/300*65    290
+#define MOTOR_NECK_HORIZON_ANGLE_MAX    734//512+1024/300*65    734
 #define MOTOR_NECK_HORIZON_LOAD_LIMIT 1023
+#define MOTOR_LEFT_THIGH_ID             4
+#define MOTOR_LEFT_THIGH_ANGLE_MIN      205//512-1024/300*90    205
+#define MOTOR_LEFT_THIGH_ANGLE_MAX      819//512+1024/300*90    819
+#define MOTOR_LEFT_THIGH_LOAD_LIMIT   1023
+#define MOTOR_LEFT_CALF_ID              5
+#define MOTOR_LEFT_CALF_ANGLE_MIN       188//512-1024/300*95    188
+#define MOTOR_LEFT_CALF_ANGLE_MAX       700//512+1024/300*55    700
+#define MOTOR_LEFT_CALF_LOAD_LIMIT    1023
+#define MOTOR_LEFT_ANKLE_ID             6
+#define MOTOR_LEFT_ANKLE_ANGLE_MIN      376//512-1024/300*40    376
+#define MOTOR_LEFT_ANKLE_ANGLE_MAX      802//512+1024/300*85    802
+#define MOTOR_LEFT_ANKLE_LOAD_LIMIT   1023
+#define MOTOR_RIGHT_THIGH_ID            7
+#define MOTOR_RIGHT_THIGH_ANGLE_MIN     205//512-1024/300*90    205
+#define MOTOR_RIGHT_THIGH_ANGLE_MAX     819//512+1024/300*90    819
+#define MOTOR_RIGHT_THIGH_LOAD_LIMIT  1023
+#define MOTOR_RIGHT_CALF_ID             8
+#define MOTOR_RIGHT_CALF_ANGLE_MIN      324//512-1024/300*55    324
+#define MOTOR_RIGHT_CALF_ANGLE_MAX      836//512+1024/300*95    836
+#define MOTOR_RIGHT_CALF_LOAD_LIMIT   1023
+#define MOTOR_RIGHT_ANKLE_ID            9
+#define MOTOR_RIGHT_ANKLE_ANGLE_MIN     222//512-1024/300*85    222
+#define MOTOR_RIGHT_ANKLE_ANGLE_MAX     649//512+1024/300*40    649
+#define MOTOR_RIGHT_ANKLE_LOAD_LIMIT  1023
+#define MOTOR_ASS_ID                    11
+#define MOTOR_ASS_MIN                   256//512-1024/300*75    256
+#define MOTOR_ASS_MAX                   768//512+1024/300*75    768
+#define MOTOR_ASS_LOAD_LIMIT            1023
+#define MOTOR_TAIL_1_ID                 12
+#define MOTOR_TAIL_1_MIN                205//512-1024/300*90    205
+#define MOTOR_TAIL_1_MAX                819//512+1024/300*90    819
+#define MOTOR_TAIL_1_LOAD_LIMIT       1023
+#define MOTOR_TAIL_2_ID                 13
+#define MOTOR_TAIL_2_MIN                205//512-1024/300*90    205
+#define MOTOR_TAIL_2_MAX                819//512+1024/300*90    819
+#define MOTOR_TAIL_2_LOAD_LIMIT       1023
+#define MOTOR_TAIL_3_ID                 14
+#define MOTOR_TAIL_3_MIN                205//512-1024/300*90    205
+#define MOTOR_TAIL_3_MAX                819//512+1024/300*90    819
+#define MOTOR_TAIL_3_LOAD_LIMIT       1023
 #define LENGTH_THIGH    7.6
 #define LENGTH_CALF     4.8
 #define LENGTH_ANGLE    8.9
@@ -438,8 +466,8 @@ void Raptor_Motor_Init();
 
 void setup() 
 {
-  SerialUSB.println("## CM_Motor_Control ##");
   delay(2000);//Opening for power and other device on
+  SerialUSB.println("## CM_Motor_Control ##");
   pinMode(BOARD_LED_PIN, PWM);
   pinMode(RED_LED_485EXP, OUTPUT); 
   pinMode(GREEN_LED_485EXP, OUTPUT); 
@@ -474,9 +502,10 @@ void loop()
     {
       if(motor_size > 0)
       {
+        Motor_Ping(motor_list_id[scan_idx]);
         Motor_Scan(motor_list_id[scan_idx]);
         Motor_Status_Scan(motor_list_id[scan_idx]);
-        Safety_Load_Limit(motor_list_id[scan_idx]);
+        //Safety_Load_Limit(motor_list_id[scan_idx]);      
         scan_idx = (scan_idx + 1 < motor_size)? scan_idx + 1 : 0;
       }
     }
@@ -487,36 +516,72 @@ void loop()
 
 void Raptor_Motor_Init()
 {
-  motor[MOTOR_LEFT_THIGH_ID].position_max = MOTOR_LEFT_THIGH_ANGLE_MAX;
-  motor[MOTOR_LEFT_THIGH_ID].position_min = MOTOR_LEFT_THIGH_ANGLE_MIN;
-  motor[MOTOR_LEFT_THIGH_ID].load_limit = MOTOR_LEFT_THIGH_LOAD_LIMIT;
-  motor[MOTOR_LEFT_CALF_ID].position_max = MOTOR_LEFT_CALF_ANGLE_MAX;
-  motor[MOTOR_LEFT_CALF_ID].position_min = MOTOR_LEFT_CALF_ANGLE_MIN;
-  motor[MOTOR_LEFT_CALF_ID].load_limit = MOTOR_LEFT_CALF_LOAD_LIMIT;
-  motor[MOTOR_LEFT_ANKLE_ID].position_max = MOTOR_LEFT_ANKLE_ANGLE_MAX;
-  motor[MOTOR_LEFT_ANKLE_ID].position_min = MOTOR_LEFT_ANKLE_ANGLE_MIN;
-  motor[MOTOR_LEFT_ANKLE_ID].load_limit = MOTOR_LEFT_ANKLE_LOAD_LIMIT;
-  motor[MOTOR_RIGHT_THIGH_ID].position_max = MOTOR_RIGHT_THIGH_ANGLE_MAX;
-  motor[MOTOR_RIGHT_THIGH_ID].position_min = MOTOR_RIGHT_THIGH_ANGLE_MIN;
-  motor[MOTOR_RIGHT_THIGH_ID].load_limit = MOTOR_RIGHT_THIGH_LOAD_LIMIT;
-  motor[MOTOR_RIGHT_CALF_ID].position_max = MOTOR_RIGHT_CALF_ANGLE_MAX;
-  motor[MOTOR_RIGHT_CALF_ID].position_min = MOTOR_RIGHT_CALF_ANGLE_MIN;
-  motor[MOTOR_RIGHT_CALF_ID].load_limit = MOTOR_RIGHT_CALF_LOAD_LIMIT;
-  motor[MOTOR_RIGHT_ANKLE_ID].position_max = MOTOR_RIGHT_ANKLE_ANGLE_MAX;
-  motor[MOTOR_RIGHT_ANKLE_ID].position_min = MOTOR_RIGHT_ANKLE_ANGLE_MIN;
-  motor[MOTOR_RIGHT_ANKLE_ID].load_limit = MOTOR_RIGHT_ANKLE_LOAD_LIMIT;
-  motor[MOTOR_MOUTH_ID].position_max = MOTOR_MOUTH_ANGLE_MAX;
-  motor[MOTOR_MOUTH_ID].position_min = MOTOR_MOUTH_ANGLE_MIN;
-  motor[MOTOR_MOUTH_ID].load_limit = MOTOR_MOUTH_LOAD_LIMIT;
-  motor[MOTOR_HEAD_ID].position_max = MOTOR_HEAD_ANGLE_MAX;
-  motor[MOTOR_HEAD_ID].position_min = MOTOR_HEAD_ANGLE_MIN;
-  motor[MOTOR_HEAD_ID].load_limit = MOTOR_HEAD_LOAD_LIMIT;
-  motor[MOTOR_NECK_VERTICAL_ID].position_max = MOTOR_NECK_VERTICAL_ANGLE_MAX;
-  motor[MOTOR_NECK_VERTICAL_ID].position_min = MOTOR_NECK_VERTICAL_ANGLE_MIN;
-  motor[MOTOR_NECK_VERTICAL_ID].load_limit = MOTOR_NECK_VERTICAL_LOAD_LIMIT;
-  motor[MOTOR_NECK_HORIZON_ID].position_max = MOTOR_NECK_HORIZON_ANGLE_MAX;
-  motor[MOTOR_NECK_HORIZON_ID].position_min = MOTOR_NECK_HORIZON_ANGLE_MIN;
-  motor[MOTOR_NECK_HORIZON_ID].load_limit = MOTOR_NECK_HORIZON_LOAD_LIMIT;
+  byte id;
+  id = MOTOR_MOUTH_ID;
+  motor[id].position_max = MOTOR_MOUTH_ANGLE_MAX;
+  motor[id].position_min = MOTOR_MOUTH_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_MOUTH_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_NECK_VERTICAL_ID;
+  motor[id].position_max = MOTOR_NECK_VERTICAL_ANGLE_MAX;
+  motor[id].position_min = MOTOR_NECK_VERTICAL_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_NECK_VERTICAL_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_NECK_HORIZON_ID;
+  motor[id].position_max = MOTOR_NECK_HORIZON_ANGLE_MAX;
+  motor[id].position_min = MOTOR_NECK_HORIZON_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_NECK_HORIZON_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_LEFT_THIGH_ID;
+  motor[id].position_max = MOTOR_LEFT_THIGH_ANGLE_MAX;
+  motor[id].position_min = MOTOR_LEFT_THIGH_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_LEFT_THIGH_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_LEFT_CALF_ID;
+  motor[id].position_max = MOTOR_LEFT_CALF_ANGLE_MAX;
+  motor[id].position_min = MOTOR_LEFT_CALF_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_LEFT_CALF_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_LEFT_ANKLE_ID;
+  motor[id].position_max = MOTOR_LEFT_ANKLE_ANGLE_MAX;
+  motor[id].position_min = MOTOR_LEFT_ANKLE_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_LEFT_ANKLE_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_RIGHT_THIGH_ID;
+  motor[id].position_max = MOTOR_RIGHT_THIGH_ANGLE_MAX;
+  motor[id].position_min = MOTOR_RIGHT_THIGH_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_RIGHT_THIGH_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_RIGHT_CALF_ID;
+  motor[id].position_max = MOTOR_RIGHT_CALF_ANGLE_MAX;
+  motor[id].position_min = MOTOR_RIGHT_CALF_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_RIGHT_CALF_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_RIGHT_ANKLE_ID;
+  motor[id].position_max = MOTOR_RIGHT_ANKLE_ANGLE_MAX;
+  motor[id].position_min = MOTOR_RIGHT_ANKLE_ANGLE_MIN;
+  motor[id].load_limit = MOTOR_RIGHT_ANKLE_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_ASS_ID;
+  motor[id].position_max = MOTOR_ASS_MAX;
+  motor[id].position_min = MOTOR_ASS_MIN;
+  motor[id].load_limit = MOTOR_ASS_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_TAIL_1_ID;
+  motor[id].position_max = MOTOR_TAIL_1_MAX;
+  motor[id].position_min = MOTOR_TAIL_1_MIN;
+  motor[id].load_limit = MOTOR_TAIL_1_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
+  id = MOTOR_TAIL_2_ID;
+  motor[id].position_max = MOTOR_TAIL_2_MAX;
+  motor[id].position_min = MOTOR_TAIL_2_MIN;
+  motor[id].load_limit = MOTOR_TAIL_2_LOAD_LIMIT; 
+  Motor_Load_Limit_Set(id, motor[id].load_limit); 
+  id = MOTOR_TAIL_3_ID;
+  motor[id].position_max = MOTOR_TAIL_3_MAX;
+  motor[id].position_min = MOTOR_TAIL_3_MIN;
+  motor[id].load_limit = MOTOR_TAIL_3_LOAD_LIMIT;
+  Motor_Load_Limit_Set(id, motor[id].load_limit);
 }
 
 void Motor_Init()
@@ -543,6 +608,9 @@ void Motor_Init()
         motor[i].flag_moving = false;
         motor[i].flag_safety_lock = 0x00;
         motor_size += 1;
+        SerialUSB.print("Detect model ID : ");
+        SerialUSB.print(i);
+        SerialUSB.println(" ...");
     }
     else
     {
@@ -556,18 +624,28 @@ void Motor_Ping()
   motor_size = 0;
   for(byte i = 0; i < MOTOR_SIZE; i++)
   {
-    int model = get_model(i);
-    if(model != 65535)
+    Motor_Ping(i);
+    if(motor[i].flag_motor)
     {
         motor_list_id[motor_size] = i;
-        motor[i].flag_motor = true;
-        motor[i].model = model;
         motor_size += 1;
     }
-    else
-    {
-        motor[i].flag_motor = false;
-    }
+  }
+}
+
+void Motor_Ping(byte& id)
+{
+  if(motor[id].flag_motor)
+    return;
+  int model = get_model(id);
+  if(model != 65535)
+  {
+      motor[id].flag_motor = true;
+      motor[id].model = model;
+  }
+  else
+  {
+      motor[id].flag_motor = false;
   }
 }
 
@@ -597,29 +675,40 @@ void Motor_Scan(byte& id)
 
 void Motor_Position_Set(byte& id, int data)
 {
+  if(!motor[id].flag_motor)
+    return;
   set_position(id, data);
 }
 
 void Motor_Speed_Set(byte& id, int data)
 {
+  if(!motor[id].flag_motor)
+    return;
   set_speed(id, data);
 }
 
 void Motor_Load_Limit_Set(byte& id, int data)
 {
+  if(!motor[id].flag_motor)
+    return;
   set_load_limit(id, data);
 }
 
 void Motor_Torque_Enable_Set(byte& id, byte data)
 {
+  if(!motor[id].flag_motor)
+    return;
   set_torque_enable(id, data);
 }
 
 void Motor_Position_Detect(byte& id)
 {
+  if(!motor[id].flag_motor)
+    return;
   motor[id].position         = get_position(id);
   if(abs(motor[id].position - motor_old[id].position) > TOLERENCE_POSITION)
   {
+    pub_info_set();
     pub_position_set(id);
     USB_Publisher(com, com_size);
     motor_old[id].position = motor[id].position;
@@ -629,9 +718,12 @@ void Motor_Position_Detect(byte& id)
 
 void Motor_Speed_Detect(byte& id)
 {
+  if(!motor[id].flag_motor)
+    return;
   motor[id].speed            = get_speed(id);
   if(abs(motor[id].speed - motor_old[id].speed) > TOLERENCE_SPEED)
   {
+    pub_info_set();
     pub_speed_set(id);
     USB_Publisher(com, com_size);
     motor_old[id].speed = motor[id].speed;
@@ -641,10 +733,17 @@ void Motor_Speed_Detect(byte& id)
 
 void Motor_Load_Detect(byte& id)
 {
+  if(!motor[id].flag_motor)
+    return;
   motor[id].load             = get_load(id);
-  if(motor[id].load == 65535) return;
+  //motor[id].load_limit       = get_load_limit(id);
+  if(motor[id].load == 65535)
+  {
+    motor[id].flag_motor = false;
+    return;
+  }
   motor[id].load = (motor[id].load > 1023)? motor[id].load - 1024 : motor[id].load;//CCW : negative; CW positive
-  if((float)(abs(motor[id].load))        > (float)(LOAD_LIM)*(FATAL_RATIO))
+  if((float)(abs(motor[id].load))        > (float)(motor[id].load_limit)*(FATAL_RATIO))
   {
     if(motor[id].flag_safety_lock == 0)
     {
@@ -655,11 +754,11 @@ void Motor_Load_Detect(byte& id)
     }
     motor[id].flag_safety_lock = motor[id].flag_safety_lock | LOCK_LOAD;
   }
-  else if((float)(abs(motor[id].load))   > (float)(LOAD_LIM)*(WARN_RATIO))
+  else if((float)(abs(motor[id].load))   > (float)(motor[id].load_limit)*(WARN_RATIO))
   {
     if(motor[id].flag_safety_lock == 0)
     {
-      set_LED_enable(id, 0x01);
+      //set_LED_enable(id, 0x01);
       pub_warn_set();
       pub_load_set(id);
       USB_Publisher(com, com_size);
@@ -676,6 +775,7 @@ void Motor_Load_Detect(byte& id)
     }
     if(abs(abs(motor[id].load) - abs(motor_old[id].load)) > TOLERENCE_LOAD)
     {
+      pub_info_set();
       pub_load_set(id);
       USB_Publisher(com, com_size);
       motor_old[id].load = motor[id].load;
@@ -686,8 +786,14 @@ void Motor_Load_Detect(byte& id)
 
 void Motor_Voltage_Detect(byte& id)
 {
+  if(!motor[id].flag_motor)
+    return;
   motor[id].voltage          = get_voltage(id);
-  if(motor[id].voltage == 255) return;
+  if(motor[id].voltage == 255)
+  {
+    motor[id].flag_motor = false;
+    return;
+  }
   if((float)(motor[id].voltage/10 - VOLTAGE_MIN)      < (float)(VOLTAGE_MAX - VOLTAGE_MIN)*(1-FATAL_RATIO))
   {
     if(motor[id].flag_safety_lock == 0)
@@ -703,14 +809,14 @@ void Motor_Voltage_Detect(byte& id)
   {
     if(motor[id].flag_safety_lock == 0)
     {
-      set_LED_enable(id, 0x01);
+      //set_LED_enable(id, 0x01);
       pub_warn_set();
       pub_voltage_set(id);
       USB_Publisher(com, com_size);
     }
     motor[id].flag_safety_lock = motor[id].flag_safety_lock | LOCK_VOLTAGE;
   }
-  else if((float)(motor[id].voltage/10 - VOLTAGE_MIN) > (float)(VOLTAGE_MAX - VOLTAGE_MIN)*(FATAL_RATIO))
+  /*else if((float)(motor[id].voltage/10 - VOLTAGE_MIN) > (float)(VOLTAGE_MAX - VOLTAGE_MIN)*(FATAL_RATIO))
   {
     if(motor[id].flag_safety_lock == 0)
     {
@@ -731,7 +837,7 @@ void Motor_Voltage_Detect(byte& id)
       USB_Publisher(com, com_size);
     }
     motor[id].flag_safety_lock = motor[id].flag_safety_lock | LOCK_VOLTAGE;
-  }
+  }*/
   else
   {
     if(motor[id].flag_safety_lock > 0)
@@ -742,6 +848,7 @@ void Motor_Voltage_Detect(byte& id)
     }
     if(abs(motor[id].voltage - motor_old[id].voltage) > TOLERENCE_VOLTAGE)
     {
+      pub_info_set();
       pub_voltage_set(id);
       USB_Publisher(com, com_size);
       motor_old[id].voltage = motor[id].voltage;
@@ -752,6 +859,8 @@ void Motor_Voltage_Detect(byte& id)
 
 void Motor_Temperature_Detect(byte& id)
 {
+  if(!motor[id].flag_motor)
+    return;
   motor[id].temperature      = get_temperature(id);
   if(motor[id].temperature == 255) return;
   if((float)(motor[id].temperature) > (float)(TEMPERATUE_LIM)*(FATAL_RATIO))
@@ -769,7 +878,7 @@ void Motor_Temperature_Detect(byte& id)
   {
     if(motor[id].flag_safety_lock == 0)
     {
-      set_LED_enable(id, 0x01);
+      //set_LED_enable(id, 0x01);
       pub_warn_set();
       pub_temperature_set(id);
       USB_Publisher(com, com_size);
@@ -786,6 +895,7 @@ void Motor_Temperature_Detect(byte& id)
     }
     if(abs(motor[id].temperature - motor_old[id].temperature) > TOLERENCE_TEMPERATURE)
     {
+      pub_info_set();
       pub_temperature_set(id);
       USB_Publisher(com, com_size);
       motor_old[id].temperature = motor[id].temperature;
@@ -796,6 +906,8 @@ void Motor_Temperature_Detect(byte& id)
 
 void Motor_Torque_Detect(byte& id)
 {
+  if(!motor[id].flag_motor)
+    return;
   motor[id].torque             = get_torque_enable(id);
   if(motor[id].torque != motor_old[id].torque)
   {
@@ -808,6 +920,8 @@ void Motor_Torque_Detect(byte& id)
 
 void Motor_Moving_Detect(byte& id)
 {
+  if(!motor[id].flag_motor)
+    return;
   motor[id].flag_moving      = is_moving(id);
   return;
 }
@@ -819,6 +933,7 @@ void USB_Interrupt(byte* buffer, byte nCount)
   read(buffer, nCount);
   write(buffer, nCount);
   digitalWrite(BLUE_LED_485EXP, 1); 
+  ack(buffer, nCount);
 }
 
 void USB_Publisher(byte* buffer, byte nCount)
@@ -826,7 +941,7 @@ void USB_Publisher(byte* buffer, byte nCount)
   digitalWrite(GREEN_LED_485EXP, 0); 
   for(byte i = 0; i < nCount; i++)  //printf_SerialUSB_Buffer[N]_receive_Data 
     SerialUSB.print((char)buffer[i]);
-  SerialUSB.print("\n");
+  SerialUSB.print(MOTOR_END_CHAR);//end of char : '\n'
   digitalWrite(GREEN_LED_485EXP, 1);
 }
 
@@ -835,6 +950,6 @@ void USB_Publisher(char* buffer, byte nCount)
   digitalWrite(GREEN_LED_485EXP, 0); 
   for(byte i = 0; i < nCount; i++)  //printf_SerialUSB_Buffer[N]_receive_Data 
     SerialUSB.print(buffer[i]);
-  SerialUSB.print("\n");
+  SerialUSB.print(MOTOR_END_CHAR);//end of char : '\n'
   digitalWrite(GREEN_LED_485EXP, 1);
 }

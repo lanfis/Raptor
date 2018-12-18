@@ -15,8 +15,8 @@ class Motor_Control_Node
     private:
       ros::AsyncSpinner spinner;
       ros::NodeHandle n_;
-	  Motor_Control *ms;
-	  
+      Motor_Control *ms;
+      
     public:
       Motor_Control_Node(ros::NodeHandle& n, int thread);
       ~Motor_Control_Node();
@@ -25,20 +25,20 @@ class Motor_Control_Node
 
 Motor_Control_Node::Motor_Control_Node(ros::NodeHandle& n, int thread) : n_(n), spinner(thread)
 {
-	ms = new Motor_Control(n_);
-	ms -> init();
+    ms = new Motor_Control(n_);
+    ms -> init();
     run();
     spinner.start();
 }
 
 Motor_Control_Node::~Motor_Control_Node()
 {
-	delete ms;
+    delete ms;
 }
 
 void Motor_Control_Node::run()
 {
-	ms -> run();
+    ms -> run();
 }
 
 

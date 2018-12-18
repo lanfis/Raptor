@@ -54,6 +54,8 @@ class Camera// : public nodelet::Nodelet
     ros::Publisher camera_info_pub_;
     ros::Subscriber device_id_sub_;
     ros::Subscriber resolution_ratio_sub_;
+
+    string image_encoding = "bgr8";
     
   private:
     void pub_topic_get();
@@ -88,6 +90,8 @@ class Camera// : public nodelet::Nodelet
     }
     
   private:
+    void msg_image_header_init(boost::shared_ptr<sensor_msgs::Image> msg);
+    void msg_image_header_attach(boost::shared_ptr<sensor_msgs::Image> msg);
     bool camera_init();
     bool camera_shutdown();
     void image_publish();
@@ -99,8 +103,9 @@ class Camera// : public nodelet::Nodelet
     int device_id;
     Mat *image;
     bool flag_activation_camera;
+    bool is_msg_image_header_init = false;
     
-    Camera_Driver *camera;
+    Camera_Driver *camera = NULL;
     void image_roi_get();
     void create_Camera_Info();
     void create_Camera_Info(const cv::Size &size, const cv::Mat &cameraMatrix, const cv::Mat &distortion, const cv::Mat &rotation, const cv::Mat &projection, sensor_msgs::CameraInfo &cameraInfo) const;
@@ -149,6 +154,7 @@ void Camera::run()
     if(camera == NULL)  return;
     if(camera -> run()) 
     {
+        msg_image_header_init(this -> msg_image);
         image_publish();
     }
     camera_info_publish();
@@ -157,19 +163,36 @@ void Camera::run()
 void Camera::image_publish()
 {
   //sensor_msgs::ImagePtr msg_image(new sensor_msgs::Image);
-  msg_image = cv_bridge::CvImage(std_msgs::Header(), "bgr8", *image).toImageMsg();
+  msg_image = cv_bridge::CvImage(std_msgs::Header(), image_encoding, *image).toImageMsg();
+  msg_image_header_attach(msg_image);
   //sensor_msgs::ImagePtr msg_image;
-  //msg_image = cv_bridge::CvImage(std_msgs::Header(), "bgr8", *image).toImageMsg();
+  //msg_image = cv_bridge::CvImage(std_msgs::Header(), image_encoding, *image).toImageMsg();
   it_pub_.publish(msg_image);
+}
+
+void Camera::msg_image_header_init(boost::shared_ptr<sensor_msgs::Image> msg)
+{    
+  if(is_msg_image_header_init) return;
+  msg -> header.frame_id = this -> topic_image_pub;
+  msg -> height = this -> camera -> height;
+  msg -> width  = this -> camera -> width;
+  msg -> encoding = this -> image_encoding;
+  //msg -> step = ;
+  is_msg_image_header_init = true;
+}
+
+void Camera::msg_image_header_attach(boost::shared_ptr<sensor_msgs::Image> msg)
+{
+  msg -> header.stamp = ros::Time::now();
 }
 
 bool Camera::camera_init()
 {
     if(camera == NULL)
       camera = new Camera_Driver;
-    this -> image = &camera -> image;
     if(camera -> is_open())
     {
+      this -> image = &camera -> image;
 	  string status = "Camera initializing ...ok !";
   	  OUT_INFO(nodeName.c_str(), status);
       return true;

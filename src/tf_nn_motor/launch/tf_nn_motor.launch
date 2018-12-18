@@ -1,0 +1,15 @@
+<launch>  
+  <node name="ros_serial" pkg="ros_serial" type="ros_serial" respawn="false" output="screen">   
+  </node>
+    
+  <node name="motor_control" pkg="motor_control" type="motor_control" respawn="false" output="screen">
+    <remap from="Motor_Control/motor_data_sub" to="ROS_Serial/data_pub"/>
+    <remap from="Motor_Control/motor_data_pub" to="ROS_Serial/data_sub"/>
+      
+    <remap from="Motor_Control/control_data_sub" to="TF_NN_MOTOR/motor_status_pub"/>
+    <remap from="Motor_Control/control_data_pub" to="TF_NN_MOTOR/motor_status_sub"/>
+  </node>
+  
+  <node name="tf_nn_motor" pkg="tf_nn_motor" type="tf_nn_motor" respawn="false" output="screen">
+  </node>
+</launch>

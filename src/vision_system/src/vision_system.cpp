@@ -17,7 +17,6 @@ int main(int argc, char** argv)
 
   ROS_INFO("%s activating ok !", nodeName.c_str());
   Vision_System vs(n, 0);
-  /*
   nodelet::Loader nodelet_loader;
   nodelet::M_string remap_camera_focus(ros::names::getRemappings());
   nodelet::V_string nargv_camera_focus;
@@ -25,6 +24,7 @@ int main(int argc, char** argv)
   nodelet_loader.load(nodelet_camera_focus_name, "camera_focus_nodelet/camera_focus", remap_camera_focus, nargv_camera_focus);
   ROS_INFO("%s activating ok !", nodelet_camera_focus_name.c_str());
   
+  /*
   nodelet::M_string remap_motion_detector(ros::names::getRemappings());
   nodelet::V_string nargv_motion_detector;
   std::string nodelet_motion_detector_name = "motion_detector";//ros::this_node::getName();// + "/motion_detector_nodelet/motion_detector";
